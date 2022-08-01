@@ -13,14 +13,21 @@ class CreateProductStoragesTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('product_storages', function (Blueprint $table) {
-            $table->id();
+            $table->engine = 'InnoDB';
+
+            $table->increments('id');
+            $table->bigInteger('category_id')->unsigned();
             $table->string('name');
             $table->string('description');
             $table->string('price');
             $table->string('quantity');
-            $table->string('category');
+
             $table->timestamps();
+
+
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
